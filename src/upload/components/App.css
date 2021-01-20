@@ -1,0 +1,82 @@
+.App {
+  display: flex;
+  width: 100%;
+  height: calc(100vh - var(--footer-h)); /* 30px footer height */
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: 150px;
+}
+
+.filehandler {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background: #fefefe;
+  -webkit-box-shadow: 0px 0px 30px 0px rgba(0,0,0,.2);
+  -moz-box-shadow: 0px 0px 30px 0px rgba(0,0,0,.2);
+  box-shadow: 0px 0px 30px 0px rgba(0,0,0,.2);
+  transition: box-shadow 200ms ease-in, background 300ms ease-out;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.filehandler:hover {
+  cursor: pointer;
+  -webkit-box-shadow: 0px 0px 30px 0px rgba(0,0,0,.35);
+  -moz-box-shadow: 0px 0px 30px 0px rgba(0,0,0,.35);
+  box-shadow: 0px 0px 30px 0px rgba(0,0,0,.35);
+}
+
+.filehandler.preview::after {
+  content: 'x';
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid #000;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.filehandler.preview {
+  background: linear-gradient(90deg, #536ef1, #4867ea);
+}
+
+#fileloader {
+  width: 0;
+  height: 0;
+  top: -9999px;
+  visibility: hidden;
+  position: absolute;
+}
+
+#preview {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+}
+
+.transfer {
+  margin-top: 20px;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Fredoka One';
+  color: #fff;
+  background-color: #26ddee;
+  padding: 8px 18px;
+}

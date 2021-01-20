@@ -1,0 +1,11 @@
+.input {
+  width: 90%;
+  max-width: 400px;
+  border-radius: var(--border-rd);
+  border: none;
+  font-family: var(--font-f);
+  background-color: transparent;
+  color: rgba(0, 0, 0, .5);
+  outline: none;
+  user-select: none;
+}

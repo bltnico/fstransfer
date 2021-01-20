@@ -1,0 +1,47 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: 150px;
+}
+
+.handler {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background: #fefefe;
+  -webkit-box-shadow: 0px 0px 30px 0px rgba(0,0,0,.2);
+  -moz-box-shadow: 0px 0px 30px 0px rgba(0,0,0,.2);
+  box-shadow: 0px 0px 30px 0px rgba(0,0,0,.2);
+  transition: all 110ms ease-in;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.handler:not(.loaded):hover {
+  cursor: pointer;
+  -webkit-box-shadow: 0px 0px 30px 0px rgba(0,0,0,.35);
+  -moz-box-shadow: 0px 0px 30px 0px rgba(0,0,0,.35);
+  box-shadow: 0px 0px 30px 0px rgba(0,0,0,.35);
+}
+
+.handler.loaded {
+  background: transparent;
+  border: 5px solid var(--secondary-c);
+}
+
+.handler.error {
+  border: 5px solid var(--error-c);
+}
+
+.inputFile {
+  width: 0;
+  height: 0;
+  top: -9999px;
+  visibility: hidden;
+  position: absolute;
+}
