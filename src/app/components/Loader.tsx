@@ -6,7 +6,8 @@ const Loader = () => (
   <Player
     autoplay
     loop
-    src={loaderAnimation} />
+    src={loaderAnimation}
+    style={{ width: '64px', height: '64px' }} />
 );
 
 export default Loader;
