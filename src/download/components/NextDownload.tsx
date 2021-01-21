@@ -35,7 +35,7 @@ const Download = () => {
       } catch (e) {
         // @TODO only dev
         console.error(`download error: ${e.message}`);
-        setError(true);
+        setError(e?.message || 'File no longer exist');
       }
     })();
   }, [id]);
@@ -71,7 +71,7 @@ const Download = () => {
     <div className={styles.container}>
       {!error && <ShieldIcon className={styles.shield} />}
       {error && <ErrorIcon className={styles.shield} />}
-      {error && <p>File no longer exist <br />or bad signature !</p>}
+      {error && <p>{error}</p>}
       {renderFile}
       {preview && <DownloadButton base64={preview} />}
     </div>

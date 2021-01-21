@@ -106,8 +106,7 @@ const FileReader = () => {
         id={'fileloader'}
         className={styles.inputFile}
         type={'file'}
-        accept={'image/*, .pdf'}
-        capture />
+        accept={'image/*, .pdf, capture=camera'} />
     </div>
   );
 }
