@@ -52,6 +52,7 @@ const TimeSelect = () => {
       <Button
         className={styles.disabled}
         onClick={toggleSelect}
+        disabled={true}
         label={`Expire in ${time.label}`} />
       {renderSelect}
     </>

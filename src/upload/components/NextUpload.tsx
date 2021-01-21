@@ -1,3 +1,4 @@
+import Loader from 'app/components/Loader';
 import FileReader from 'upload/components/FileReader';
 import TimeSelect from 'upload/components/TimeSelect';
 import { useUpload, TransferStatus } from 'upload/components/UploadProvider';
@@ -17,6 +18,9 @@ const Upload = () => {
           <TimeSelect />
           <TransferButton />
         </>
+      )}
+      {status === TransferStatus.LOADING && (
+        <Loader />
       )}
       {status === TransferStatus.SUCCESS && (
         <ShareButton />

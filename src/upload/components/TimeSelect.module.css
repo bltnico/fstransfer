@@ -1,9 +1,3 @@
-.disabled {
-  opacity: 0.5;
-  cursor: none;
-  pointer-events: none;
-}
-
 .overlay {
   position: fixed;
   bottom: 0;

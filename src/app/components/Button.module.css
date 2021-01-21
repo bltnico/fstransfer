@@ -17,6 +17,12 @@
   transition: box-shadow 200ms ease-in;
 }
 
+.button:disabled {
+  opacity: 0.5;
+  cursor: none;
+  pointer-events: none;
+}
+
 .button.gradient {
   background: linear-gradient(-90deg, var(--secondary-c), var(--primary-c-s2));
 }

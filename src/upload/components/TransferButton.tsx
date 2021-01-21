@@ -9,12 +9,12 @@ import { useUpload, TransferStatus } from 'upload/components/UploadProvider';
 
 const TransferButton = () => {
   const { setLogoState } = useApp();
-  const { file, fingerprint, setStatus, setShareUrl } = useUpload();
+  const { file, fingerprint, status, setStatus, setShareUrl } = useUpload();
 
   const canTransfer = useMemo(() => file && fingerprint, [file, fingerprint]);
 
   const upload = useCallback(async () => {
-    setStatus(TransferStatus.SUCCESS);
+    setStatus(TransferStatus.LOADING);
 
     try {
       const cryptoKey = await crypto.generateKey();
@@ -40,6 +40,7 @@ const TransferButton = () => {
     <Button
       onClick={upload}
       label={'Transfer'}
+      disabled={status === TransferStatus.LOADING}
       gradient />
   );
 };
