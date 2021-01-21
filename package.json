@@ -1,7 +1,6 @@
 {
-  "name": "e2etransfer",
-  "homepage": "https://www.nicolasbellot.fr/projets/e2etransfer/",
-  "version": "0.1.0",
+  "name": "fstransfer",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "@fingerprintjs/fingerprintjs": "3.0.5",

@@ -4,9 +4,11 @@ import * as api from 'app/services/api';
 import * as navigator from 'app/services/navigator';
 import * as crypto from 'app/services/crypto';
 import Button from 'app/components/Button';
+import { useApp, LogoState } from 'app/components/AppProvider';
 import { useUpload, TransferStatus } from 'upload/components/UploadProvider';
 
 const TransferButton = () => {
+  const { setLogoState } = useApp();
   const { file, fingerprint, setStatus, setShareUrl } = useUpload();
 
   const canTransfer = useMemo(() => file && fingerprint, [file, fingerprint]);
@@ -21,18 +23,14 @@ const TransferButton = () => {
 
       const fileId = await api.transfer(fingerprint as string, fileBuffer);
       const url = await navigator.toShareUrl(fileId, keyString as string);
-      console.log(url);
 
       setShareUrl(url);
       setStatus(TransferStatus.SUCCESS);
-
-      if (navigator.canUseNativeShare()) {
-        await navigator.nativeShare(url);
-      }
+      setLogoState(LogoState.FULL);
     } catch (e) {
       setStatus(TransferStatus.FAILURE);
     }
-  }, [file, fingerprint, setShareUrl, setStatus]);
+  }, [file, fingerprint, setShareUrl, setStatus, setLogoState]);
 
   if (!canTransfer) {
     return null;

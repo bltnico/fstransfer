@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import cx from 'classnames';
 
 import { fileToBase64, fileTypeFromBase64, FileType } from 'app/services/file';
+import { useApp, LogoState } from 'app/components/AppProvider';
 import { useUpload } from 'upload/components/UploadProvider';
 
 import { ReactComponent as UploadIcon } from 'upload.svg';
@@ -11,6 +12,7 @@ import { ReactComponent as ErrorIcon } from 'cancel.svg';
 import styles from 'upload/components/FileReader.module.css';
 
 const FileReader = () => {
+  const { setLogoState } = useApp();
   const { file, setFile } = useUpload();
   const [error, setError] = useState<boolean>(false);
   const input = useRef() as React.MutableRefObject<HTMLInputElement>;
@@ -43,6 +45,7 @@ const FileReader = () => {
       }
 
       setFile(base64);
+      setLogoState(LogoState.HALF);
     };
 
     iref.addEventListener('change', onInputRefChange, false);

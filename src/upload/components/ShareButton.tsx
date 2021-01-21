@@ -17,7 +17,7 @@ const ShareButton = () => {
 
   useEffect(() => {
     (async () => {
-      if (canUseNativeShare()) {
+      if (canUseNativeShare() && shareUrl) {
         await nativeShare(shareUrl as string);
       }
     })();

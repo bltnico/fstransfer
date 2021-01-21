@@ -8,7 +8,8 @@ import { signHMACSha256 } from 'app/services/crypto';
  * Generate uniq ID to sign
  */
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001';
+// const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001';
+const API_URL = process.env.REACT_APP_API_URL || 'https://fstransfer.herokuapp.com';
 
 const endpoint = (path: string): string => `${API_URL}${path}`;
 
@@ -56,7 +57,7 @@ export async function transfer(fingerprint: string, fileBuffer: ArrayBuffer): Pr
 }
 
 export async function receive(fileId: string): Promise<ArrayBuffer> {
-  const path = `/receive?id=${fileId}`;
+  const path = `/receive/${fileId}`;
   const { signature, timestamp, version } = await signRequest('GET', path, '');
 
   const headers = new Headers();

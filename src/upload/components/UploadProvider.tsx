@@ -44,7 +44,7 @@ const UploadProvider = ({ children }: Props) => {
   const [fingerprint, setFingerprint] = useState<string | null>(null);
   const [file, setFile] = useState<string | ArrayBuffer | null>(null);
   const [duration, setDuration] = useState<string | null>(null);
-  const [shareUrl, setShareUrl] = useState<string | null>('http://localhost:3000/743f379982231b0656e1ba507ce5c3315b4e79c48aa47680f42ba9df0c1b2ca0#k=7eLpBdUXWqcWTSGB-WHZ1Q');
+  const [shareUrl, setShareUrl] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {

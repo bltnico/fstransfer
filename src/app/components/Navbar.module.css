@@ -1,0 +1,55 @@
+.nav {
+  width: 100%;
+}
+
+.innerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 12px 22px;
+}
+
+.fst {
+  position: relative;
+  z-index: 1;
+  font-size: 24px;
+  font-family: var(--font-f);
+  transition: transform 200ms ease-in-out;
+}
+
+.fst.full {
+  transform: skew(0, -2deg);
+}
+
+.fst::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -10px;
+  width: 0;
+  height: 5px;
+  border-radius: 50px;
+  background-color: var(--primary-c-s1);
+  z-index: -1;
+  animation: tra 500ms ease-in-out;
+  transition: all 500ms linear;
+}
+
+.fst.third::after {
+  width: calc(100% / 4);
+}
+
+.fst.half::after {
+  width: calc(100% / 1.7);
+}
+
+.fst.full::after {
+  width: 100%;
+  background-color: var(--secondary-c);
+}
+
+@keyframes tra {
+  from { width: calc(100% / 10); }
+  to { width: calc(100% / 4); }
+}

@@ -1,24 +1,40 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
+import AppProvider from 'app/components/AppProvider';
+import Navbar from 'app/components/Navbar';
 import Footer from 'app/components/Footer';
-import UploadProvider from 'upload/components/UploadProvider';
-import NextUpload from 'upload/components/NextUpload';
-import NextDownload from 'download/components/NextDownload';
+
+const Embed = lazy(() => import('app/components/Embed'));
+const UploadProvider = lazy(() => import('upload/components/UploadProvider'));
+const NextUpload = lazy(() => import('upload/components/NextUpload'));
+const NextDownload = lazy(() => import('download/components/NextDownload'));
 
 const Router = () => (
-  <BrowserRouter basename={'/projets/e2etransfer'}>
-    <Switch>
-      <Route path={'/:id'}>
-        <NextDownload />
-      </Route>
-      <Route path={'/'}>
-        <UploadProvider>
-          <NextUpload />
-        </UploadProvider>
-      </Route>
-    </Switch>
-    <Footer />
+  <BrowserRouter>
+    <AppProvider>
+      <Navbar />
+      <Switch>
+        <Route path={'/embed'}>
+          <Suspense fallback={null}>
+            <Embed />
+          </Suspense>
+        </Route>
+        <Route path={'/:id'}>
+          <Suspense fallback={null}>
+            <NextDownload />
+          </Suspense>
+        </Route>
+        <Route path={'/'}>
+          <Suspense fallback={null}>
+            <UploadProvider>
+              <NextUpload />
+            </UploadProvider>
+          </Suspense>
+        </Route>
+      </Switch>
+      <Footer />
+    </AppProvider>
   </BrowserRouter>
 );
 

@@ -9,10 +9,12 @@ import ImageViewer from 'download/components/ImageViewer';
 import DownloadButton from 'download/components/DownloadButton';
 
 import { ReactComponent as ShieldIcon } from 'shield2.svg';
+import { ReactComponent as ErrorIcon } from 'cancel.svg';
 
 import styles from 'download/components/Download.module.css';
 
 const Download = () => {
+  const [error, setError] = useState<boolean>(false);
   const [fileType, setFileType] = useState<FileType>(FileType.UNKNOW);
   const [preview, setPreview] = useState<string | null>(null);
   const { id } = useParams() as { id: string };
@@ -31,7 +33,9 @@ const Download = () => {
         setFileType(fileType);
         setPreview(base64 as string);
       } catch (e) {
-        alert(`download error: ${e.message}`);
+        // @TODO only dev
+        console.error(`download error: ${e.message}`);
+        setError(true);
       }
     })();
   }, [id]);
@@ -65,7 +69,9 @@ const Download = () => {
 
   return (
     <div className={styles.container}>
-      <ShieldIcon className={styles.shield} />
+      {!error && <ShieldIcon className={styles.shield} />}
+      {error && <ErrorIcon className={styles.shield} />}
+      {error && <p>File no longer exist <br />or bad signature !</p>}
       {renderFile}
       {preview && <DownloadButton base64={preview} />}
     </div>
