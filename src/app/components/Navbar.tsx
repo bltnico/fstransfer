@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import cx from 'classnames';
 
 import { LogoState, useApp } from 'app/components/AppProvider';
@@ -6,7 +7,8 @@ import styles from 'app/components/Navbar.module.css';
 
 const Navbar = () => {
   const { logoState } = useApp();
-  console.log(logoState);
+
+  const reset = useCallback(() => window.location.href = '/', []);
 
   const logoStyles = cx(styles.fst, {
     [styles.third]: logoState === LogoState.THIRD,
@@ -17,7 +19,11 @@ const Navbar = () => {
   return (
     <nav className={styles.nav}>
       <div className={styles.innerContainer}>
-        <span className={logoStyles}>fstransfer</span>
+        <span
+          className={logoStyles}
+          onClick={reset}>
+          fstransfer
+        </span>
         <span>hello 🥳</span>
       </div>
     </nav>

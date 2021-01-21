@@ -38,6 +38,11 @@
   border: 5px solid var(--error-c);
 }
 
+.handler span {
+  font-size: 12px;
+  color: var(--error-c);
+}
+
 .inputFile {
   width: 0;
   height: 0;
