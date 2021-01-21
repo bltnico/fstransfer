@@ -5,6 +5,7 @@ import { extractJwkFromUrl } from 'app/services/navigator';
 import { decryptWithKey, importKey } from 'app/services/crypto';
 import { fileTypeFromBase64, FileType } from 'app/services/file';
 import { receive } from 'app/services/api';
+import useSkipInternalBrowser from 'app/hooks/useSkipInternalBrowser';
 import ImageViewer from 'download/components/ImageViewer';
 import DownloadButton from 'download/components/DownloadButton';
 
@@ -14,6 +15,8 @@ import { ReactComponent as ErrorIcon } from 'cancel.svg';
 import styles from 'download/components/Download.module.css';
 
 const Download = () => {
+  useSkipInternalBrowser();
+
   const [error, setError] = useState<boolean>(false);
   const [fileType, setFileType] = useState<FileType>(FileType.UNKNOW);
   const [preview, setPreview] = useState<string | null>(null);

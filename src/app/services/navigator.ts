@@ -36,7 +36,9 @@ export function open(url: string) {
 }
 
 export async function extractJwkFromUrl(): Promise<string> {
-  const key = window.location.hash.slice(URL_KEY_IDENTIFIER.length);
+  const rawKey = window.location.hash.slice(URL_KEY_IDENTIFIER.length);
+  const key = rawKey.split('?')[0];
+
   if (!key) {
     throw new Error('Missing url key');
   }
