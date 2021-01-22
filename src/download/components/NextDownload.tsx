@@ -1,11 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { extractJwkFromUrl } from 'app/services/navigator';
+import { extractJwkFromUrl, isInInsecureContext } from 'app/services/navigator';
 import { decryptWithKey, importKey } from 'app/services/crypto';
 import { fileTypeFromBase64, FileType } from 'app/services/file';
 import { receive } from 'app/services/api';
-import useSkipInternalBrowser from 'app/hooks/useSkipInternalBrowser';
 import ImageViewer from 'download/components/ImageViewer';
 import DownloadButton from 'download/components/DownloadButton';
 
@@ -15,8 +14,6 @@ import { ReactComponent as ErrorIcon } from 'cancel.svg';
 import styles from 'download/components/Download.module.css';
 
 const Download = () => {
-  useSkipInternalBrowser();
-
   const [error, setError] = useState<boolean>(false);
   const [fileType, setFileType] = useState<FileType>(FileType.UNKNOW);
   const [preview, setPreview] = useState<string | null>(null);
@@ -25,6 +22,7 @@ const Download = () => {
   useEffect(() => {
     (async () => {
       try {
+        await isInInsecureContext();
         const jwk = await extractJwkFromUrl();
         const key = await importKey(jwk);
 
@@ -36,8 +34,6 @@ const Download = () => {
         setFileType(fileType);
         setPreview(base64 as string);
       } catch (e) {
-        // @TODO only dev
-        console.error(`download error: ${e.message}`);
         setError(e?.message || 'File no longer exist');
       }
     })();
@@ -45,7 +41,6 @@ const Download = () => {
 
   const renderFile = useMemo(() => {
     if (!preview) {
-      // @TODO loader
       return null;
     }
 

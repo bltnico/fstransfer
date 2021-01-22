@@ -7,6 +7,12 @@
   flex-direction: column;
 }
 
+.container p {
+  width: 100%;
+  max-width: 90%;
+  text-align: center;
+}
+
 .shield {
   width: 80px;
   height: 80px;

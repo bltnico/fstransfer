@@ -103,18 +103,3 @@ export async function signHMACSha256(str: string): Promise<string> {
 
   return _buf2hex(keyBuffer);
 }
-
-
-// async function hmacSha256(key, str) {
-//   const buf = new TextEncoder("utf-8").encode(str);
-//   const sig = await window.crypto.subtle.sign("HMAC", key, buf);
-//   return buf2hex(sig);
-// }
-
-// const key = await window.crypto.subtle.generateKey(
-//   {name:"HMAC","hash":"SHA-256"},
-//   true,
-//   ["sign", "verify"]);
-// secretKeyEl.value = JSON.stringify(
-//   await window.crypto.subtle.exportKey("jwk", key));
-
