@@ -1,6 +1,6 @@
 {
   "name": "fstransfer",
-  "version": "0.4.6",
+  "version": "0.4.7",
   "private": true,
   "dependencies": {
     "@fingerprintjs/fingerprintjs": "3.0.5",

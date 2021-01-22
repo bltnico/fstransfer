@@ -47,6 +47,10 @@ export function canRun(): boolean {
   return crypto && !isIframe;
 }
 
+export function isStandaloneApp() {
+  return window.matchMedia('(display-mode: standalone)').matches;
+}
+
 export function canUseNativeShare() {
   return !!navigator.share;
 }
