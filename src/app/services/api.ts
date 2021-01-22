@@ -71,6 +71,10 @@ export async function receive(fileId: string): Promise<ArrayBuffer> {
     { headers },
   );
 
+  if (response.status === 404) {
+    throw new Error('File no longer exist');
+  }
+
   const fileEncrypted = await response.arrayBuffer();
   return fileEncrypted;
 }
