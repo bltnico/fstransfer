@@ -15,13 +15,13 @@ const ShareButton = () => {
   const { shareUrl } = useUpload();
   const [copied, copy] = useState<boolean>(false);
 
-  const nativeShare: any = useCallback(() => nativeShare(shareUrl as string), [shareUrl]);
+  const handleNativeShare = useCallback(() => nativeShare(shareUrl as string), [shareUrl]);
 
   useEffect(() => {
     if (canUseNativeShare() && shareUrl) {
-      nativeShare();
+      handleNativeShare();
     }
-  }, [nativeShare, shareUrl]);
+  }, [handleNativeShare, shareUrl]);
 
   const handleCopy = useCallback((_, state) => copy(state), []);
 
@@ -32,11 +32,11 @@ const ShareButton = () => {
 
     return (
       <Button
-        onClick={nativeShare}
+        onClick={handleNativeShare}
         label={'Share'}
         gradient />
     );
-  }, [nativeShare]);
+  }, [handleNativeShare]);
 
   const renderButtonLabel = useMemo(() => {
     if (copied) {
