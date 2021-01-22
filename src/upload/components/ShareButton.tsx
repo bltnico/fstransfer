@@ -15,15 +15,28 @@ const ShareButton = () => {
   const { shareUrl } = useUpload();
   const [copied, copy] = useState<boolean>(false);
 
+  const nativeShare: any = useCallback(() => nativeShare(shareUrl as string), [shareUrl]);
+
   useEffect(() => {
-    (async () => {
-      if (canUseNativeShare() && shareUrl) {
-        await nativeShare(shareUrl as string);
-      }
-    })();
-  }, [shareUrl]);
+    if (canUseNativeShare() && shareUrl) {
+      nativeShare();
+    }
+  }, [nativeShare, shareUrl]);
 
   const handleCopy = useCallback((_, state) => copy(state), []);
+
+  const renderShareButton = useMemo(() => {
+    if (!canUseNativeShare()) {
+      return null;
+    }
+
+    return (
+      <Button
+        onClick={nativeShare}
+        label={'Share'}
+        gradient />
+    );
+  }, [nativeShare]);
 
   const renderButtonLabel = useMemo(() => {
     if (copied) {
@@ -52,7 +65,11 @@ const ShareButton = () => {
           label={renderButtonLabel}
           gradient />
       </CopyToClipboard>
-      <a href={shareUrl as string}>
+      {renderShareButton}
+      <a
+        href={shareUrl as string}
+        title={'Share'}
+        className={styles.share}>
         <Button label={'Open file'} />
       </a>
     </>

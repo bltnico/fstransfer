@@ -1,6 +1,15 @@
 const URL_KEY_IDENTIFIER = '#k=';
 
-export async function isFacebookApp(): Promise<boolean> {
+async function isChildWindow(): Promise<boolean> {
+  const opener = window.opener;
+  if (opener) {
+    throw new Error('Parent window detected');
+  }
+
+  return false;
+}
+
+async function isFacebookApp(): Promise<boolean> {
   const ua = navigator.userAgent || navigator.vendor;
   const fbAgent = (ua.indexOf('FBAN') > -1) || (ua.indexOf('FBAV') > -1) || (ua.indexOf('Instagram') > -1);
 
@@ -11,7 +20,7 @@ export async function isFacebookApp(): Promise<boolean> {
   return false;
 }
 
-export async function isIframe(): Promise<boolean> {
+async function isIframe(): Promise<boolean> {
   const frameEl = window.frameElement;
   if (frameEl) {
     throw new Error('Iframe detected');
@@ -24,6 +33,7 @@ export async function isInInsecureContext(): Promise<void> {
   try {
     await Promise.all([
       isFacebookApp(),
+      isChildWindow(),
       isIframe(),
     ]);
   } catch (e) {

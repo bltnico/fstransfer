@@ -9,3 +9,8 @@
   outline: none;
   user-select: none;
 }
+
+.share {
+  width: 200px;
+  display: inline-block;
+}

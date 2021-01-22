@@ -4,14 +4,19 @@ import Button from 'app/components/Button';
 
 import styles from 'upload/components/TimeSelect.module.css';
 
-const TIMES = [
+export type TimeChoice = {
+  label: string;
+  value: '1h' | '1d' | '1w';
+};
+
+const TIMES: TimeChoice[] = [
   { label: '1 hour', value: '1h' },
   { label: '1 day', value: '1d' },
   { label: '1 week', value: '1w' },
 ];
 
 const TimeSelect = () => {
-  const [time, setTime] = useState(TIMES[0]);
+  const [time, setTime] = useState<TimeChoice>(TIMES[0]);
   const [open, setOpen] = useState<boolean>(false);
 
   const toggleSelect = useCallback(() => {
