@@ -1,62 +1,114 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+
+import { extractJwkFromUrl, isInInsecureContext } from 'app/services/navigator';
+import { decryptWithKey, importKey } from 'app/services/crypto';
+import { fileTypeFromBase64, FileType } from 'app/services/file';
+import { receive } from 'app/services/api';
+import Loader from 'app/components/Loader';
+import ImageViewer from 'download/components/ImageViewer';
+import DownloadButton from 'download/components/DownloadButton';
+
+import { ReactComponent as ErrorIcon } from 'cancel.svg';
+
+import styles from 'download/components/Download.module.css';
+import Button from 'app/components/Button';
 
 const Download = () => {
+  const history = useHistory();
+  const [ready, setReady] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+  const [fileType, setFileType] = useState<FileType>(FileType.UNKNOW);
   const [preview, setPreview] = useState<string | null>(null);
   const { id } = useParams() as { id: string };
 
   useEffect(() => {
     (async () => {
       try {
-        const jwk = window.location.hash.slice("#k=".length);
-        const key = await window.crypto.subtle.importKey(
-          'jwk',
-          {
-            k: jwk,
-            alg: 'A128GCM',
-            ext: true,
-            key_ops: ['encrypt', 'decrypt'],
-            kty: 'oct',
-          },
-          { name: 'AES-GCM', length: 128 },
-          false, // extractable
-          ['decrypt']
-        );
+        await isInInsecureContext();
+        const jwk = await extractJwkFromUrl();
+        const key = await importKey(jwk);
 
-        const response = await fetch(`http://localhost:5001/receive?id=${id}`, {
-          method: 'GET',
-          // headers: {
-          //   'Content-Type': 'text/plain',
-          // },
-        });
+        const buffer = await receive(id);
+        const base64 = await decryptWithKey(key, buffer);
 
-        // @ts-ignore
-        const encrypted = await response.arrayBuffer();
-        console.log(encrypted);
+        const fileType = await fileTypeFromBase64(base64);
 
-        const decrypted = await window.crypto.subtle.decrypt(
-          { name: 'AES-GCM', iv: new Uint8Array(12) },
-          key,
-          // new Uint8Array(encrypted),
-          encrypted,
-        );
-
-        const decoded = new window.TextDecoder().decode(new Uint8Array(decrypted));
-        // const content = JSON.parse(decoded);
-        console.log(decoded.substring("data:image/".length, decoded.indexOf(";base64")));
-        setPreview(decoded as string);
+        setFileType(fileType);
+        setPreview(base64 as string);
       } catch (e) {
-        console.error('download error: ', e);
+        setError(e?.message);
+      } finally {
+        setReady(true);
       }
     })();
   }, [id]);
 
+  const cancel = useCallback(() => {
+    history.push('/');
+  }, [history]);
+
+  const renderError = useMemo(() => {
+    if (!error) {
+      return null;
+    }
+
+    return (
+      <>
+       <ErrorIcon className={styles.icon} />
+       <p className={styles.error}>{error}</p>
+       <Button
+        onClick={cancel}
+        label={'Cancel'} />
+      </>
+    );
+  }, [error, cancel]);
+
+  const renderFile = useMemo(() => {
+    if (!preview) {
+      return null;
+    }
+
+    if (fileType === FileType.IMAGE) {
+      return (
+        <div className={styles.preview}>
+          <ImageViewer base64={preview} />
+        </div>
+      );
+    }
+
+    if (fileType === FileType.PDF) {
+      return (
+        <div className={styles.preview}>
+          <iframe
+            title={preview.substring(0, 5)}
+            src={preview} />
+        </div>
+      );
+    }
+
+    return null;
+  }, [fileType, preview]);
+
+
+  const renderContent = useMemo(() => {
+    if (!ready) {
+      return <Loader />;
+    }
+
+    return (
+      <>
+        {renderError}
+        {renderFile}
+        {preview && <DownloadButton base64={preview} />}
+      </>
+    )
+  }, [ready, preview, renderError, renderFile]);
+
   return (
-    <>
-      {preview && <a href={preview} download>Download</a>}
-      {/* {preview && <iframe src={preview} width={'100%'} height={'100%'} />} */}
-      {preview && <img src={preview} width={'100%'} />}
-    </>
+    <div className={styles.container}>
+      {renderContent}
+    </div>
   );
 }
 

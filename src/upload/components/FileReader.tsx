@@ -15,6 +15,7 @@ const FileReader = () => {
   const { setLogoState } = useApp();
   const { file, setFile } = useUpload();
   const [error, setError] = useState<string | null>(null);
+  const [active, setActive] = useState<boolean>(false);
   const handler = useRef() as React.MutableRefObject<HTMLLabelElement>;
   const input = useRef() as React.MutableRefObject<HTMLInputElement>;
 
@@ -50,14 +51,20 @@ const FileReader = () => {
     iref.addEventListener('change', onInputRefChange, false);
 
     const cancelEvent = (event: DragEvent) => event.preventDefault();
+    const applyActiveState = (active: boolean = true) => (event: DragEvent) => {
+      setActive(active);
+      cancelEvent(event);
+    };
+
     const onHandlerRefDrop = (event: DragEvent) => {
       iref.files = event.dataTransfer?.files || null;
       onInputRefChange();
       cancelEvent(event);
     };
 
-    href.addEventListener('dragover', cancelEvent);
+    href.addEventListener('dragover', applyActiveState(true));
     href.addEventListener('dragenter', cancelEvent);
+    href.addEventListener('dragleave', applyActiveState(false));
     href.addEventListener('drop', onHandlerRefDrop);
 
     return () => {
@@ -66,8 +73,9 @@ const FileReader = () => {
       }
 
       if (href) {
-        href.removeEventListener('dragover', cancelEvent);
+        href.removeEventListener('dragover', applyActiveState(true));
         href.removeEventListener('dragenter', cancelEvent);
+        href.removeEventListener('dragleave', applyActiveState(false));
         href.removeEventListener('drop', onHandlerRefDrop);
       }
     }
@@ -89,6 +97,7 @@ const FileReader = () => {
   const handlerStyles = cx(styles.handler, {
     [styles.loaded]: file,
     [styles.error]: error,
+    [styles.active]: active,
   });
 
   return (

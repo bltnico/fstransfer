@@ -5,7 +5,7 @@
   border: none;
   font-family: var(--font-f);
   background-color: transparent;
-  color: rgba(0, 0, 0, .5);
+  color: var(--text-light-c);
   outline: none;
   user-select: none;
 }

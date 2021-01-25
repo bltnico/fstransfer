@@ -14,6 +14,7 @@
   z-index: 1;
   font-size: 24px;
   font-family: var(--font-f);
+  color: var(--text-c);
   transition: transform 200ms ease-in-out;
   user-select: none;
 }
@@ -54,4 +55,8 @@
 @keyframes tra {
   from { width: calc(100% / 10); }
   to { width: calc(100% / 4); }
+}
+
+.setting {
+  color: var(--text-c);
 }

@@ -2,13 +2,17 @@
   box-sizing: border-box;
 }
 
+html[data-theme='light'],
 :root {
   --font-f: 'Fredoka One', cursive;
   --background-c: #f3f6ff;
+  --background-light-c: #fefefe;
   --primary-c-s1: #536ef1;
   --primary-c-s2: #4867ea;
   --secondary-c: #3bd29e;
   --error-c: #ff6584;
+  --text-c: #000;
+  --text-light-c: rgba(0, 0, 0, .3);
   --border-rd: 5px;
   --footer-h: 40px;
 }
@@ -21,4 +25,13 @@ html, body, #root {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--background-c);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-c: #121212;
+    --background-light-c: #272727;
+    --text-c: rgb(243, 246, 255);
+    --text-light-c: rgba(243, 246, 255, .3);
+  }
 }

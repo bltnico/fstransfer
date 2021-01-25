@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback } from 'react';
 
 import Button from 'app/components/Button';
 
@@ -7,26 +7,21 @@ interface Props {
 }
 
 const DownloadButton = ({ base64 }: Props) => {
-  const link = useRef() as React.MutableRefObject<HTMLAnchorElement>;
-
-  useEffect(() => {
-    if (!link.current) {
-      return;
-    }
-
-    setTimeout(() => {
-      const lref = link.current;
-      lref.href = base64;
-    }, 0);
-
-  }, [link, base64]);
+  const download = useCallback(() => {
+    const el = document.createElement('a');
+    el.style.display = 'none';
+    el.href = base64;
+    el.download = `fstransfer-${Date.now().toString()}`;
+    document.body.appendChild(el);
+    el.click();
+    document.body.removeChild(el);
+  }, [base64]);
 
   return (
-    <a ref={link} download>
-      <Button
-        label={'Download file'}
-        gradient />
-    </a>
+    <Button
+      label={'Download file'}
+      onClick={download}
+      gradient />
   );
 };
 

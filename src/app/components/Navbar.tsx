@@ -24,7 +24,7 @@ const Navbar = () => {
           onClick={reset}>
           fstransfer
         </span>
-        <span>hello 🥳</span>
+        <span className={styles.setting}>source 🐙</span>
       </div>
     </nav>
   );
