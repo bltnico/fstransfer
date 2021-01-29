@@ -30,7 +30,7 @@
   width: 100%;
   border-top-right-radius: 20px;
   border-top-left-radius: 20px;
-  background-color: #fff;
+  background-color: var(--background-light-c);
   list-style: none;
   padding: 12px 0;
   margin: 0;
@@ -41,6 +41,7 @@
 }
 
 .list li {
+  color: var(--text-c);
   text-align: center;
   padding: 12px;
 }

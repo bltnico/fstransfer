@@ -1,9 +1,9 @@
-import { useMemo, useState, useCallback, useRef, useEffect } from 'react';
+import { useMemo, useState, useCallback, useRef } from 'react';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-import { canUseNativeShare, nativeShare } from 'app/services/navigator';
 import Button from 'app/components/Button';
+import NativeShareButton from 'upload/components/NativeShareButton';
 import { useUpload } from 'upload/components/UploadProvider';
 
 import successAnimation from 'assets/lottie/success-2.json';
@@ -15,28 +15,7 @@ const ShareButton = () => {
   const { shareUrl } = useUpload();
   const [copied, copy] = useState<boolean>(false);
 
-  const handleNativeShare = useCallback(() => nativeShare(shareUrl as string), [shareUrl]);
-
-  useEffect(() => {
-    if (canUseNativeShare() && shareUrl) {
-      handleNativeShare();
-    }
-  }, [handleNativeShare, shareUrl]);
-
   const handleCopy = useCallback((_, state) => copy(state), []);
-
-  const renderShareButton = useMemo(() => {
-    if (!canUseNativeShare()) {
-      return null;
-    }
-
-    return (
-      <Button
-        onClick={handleNativeShare}
-        label={'Share'}
-        gradient />
-    );
-  }, [handleNativeShare]);
 
   const renderButtonLabel = useMemo(() => {
     if (copied) {
@@ -65,7 +44,7 @@ const ShareButton = () => {
           label={renderButtonLabel}
           gradient />
       </CopyToClipboard>
-      {renderShareButton}
+      <NativeShareButton url={shareUrl as string} />
       <a
         href={shareUrl as string}
         title={'Share'}

@@ -19,6 +19,13 @@
   user-select: none;
 }
 
+.fst::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
 .fst:hover, .fst.full {
   transform: skew(0, -2deg);
   cursor: pointer;

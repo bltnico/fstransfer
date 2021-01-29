@@ -8,6 +8,7 @@ import { receive } from 'app/services/api';
 import Loader from 'app/components/Loader';
 import ImageViewer from 'download/components/ImageViewer';
 import DownloadButton from 'download/components/DownloadButton';
+import NativeShareButton from 'upload/components/NativeShareButton';
 
 import { ReactComponent as ErrorIcon } from 'cancel.svg';
 
@@ -80,9 +81,13 @@ const Download = () => {
     if (fileType === FileType.PDF) {
       return (
         <div className={styles.preview}>
-          <iframe
-            title={preview.substring(0, 5)}
-            src={preview} />
+          <object
+            data={preview}
+            type={'application/pdf'}>
+            <iframe
+              title={preview.substring(0, 5)}
+              src={preview} />
+          </object>
         </div>
       );
     }
@@ -101,6 +106,7 @@ const Download = () => {
         {renderError}
         {renderFile}
         {preview && <DownloadButton base64={preview} />}
+        {preview && <NativeShareButton openOnMount={false} url={window.location.href as string} />}
       </>
     )
   }, [ready, preview, renderError, renderFile]);

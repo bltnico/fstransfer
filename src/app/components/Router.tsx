@@ -6,10 +6,10 @@ import Loader from 'app/components/Loader';
 import Navbar from 'app/components/Navbar';
 import Footer from 'app/components/Footer';
 import useDefaultInstalledAppSize from 'app/hooks/useDefaultInstalledAppSize';
+import UploadProvider from 'upload/components/UploadProvider';
+import Upload from 'upload/components/Upload';
 
 const Embed = lazy(() => import('app/components/Embed'));
-const UploadProvider = lazy(() => import('upload/components/UploadProvider'));
-const Upload = lazy(() => import('upload/components/Upload'));
 const Download = lazy(() => import('download/components/Download'));
 
 const Router = () => {
@@ -31,11 +31,9 @@ const Router = () => {
             </Suspense>
           </Route>
           <Route path={'/'}>
-            <Suspense fallback={<Loader />}>
-              <UploadProvider>
-                <Upload />
-              </UploadProvider>
-            </Suspense>
+            <UploadProvider>
+              <Upload />
+            </UploadProvider>
           </Route>
         </Switch>
         <Footer />
