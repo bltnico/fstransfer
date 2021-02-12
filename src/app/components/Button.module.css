@@ -32,6 +32,11 @@
   background: var(--secondary-c);
 }
 
+.button.cancel {
+  margin-bottom: 40px;
+  background: var(--error-c);
+}
+
 .button:hover {
   cursor: pointer;
   -webkit-box-shadow: 0px 0px 30px 0px rgba(0,0,0,.3);

@@ -13,6 +13,8 @@ const TransferButton = () => {
 
   const canTransfer = useMemo(() => file && fingerprint, [file, fingerprint]);
 
+  const cancel = useCallback(() => window.location.href = '/', []);
+
   const upload = useCallback(async () => {
     setStatus(TransferStatus.LOADING);
 
@@ -37,11 +39,17 @@ const TransferButton = () => {
   }
 
   return (
-    <Button
-      onClick={upload}
-      label={'Transfer'}
-      disabled={status === TransferStatus.LOADING}
-      gradient />
+    <>
+      <Button
+        cancel
+        onClick={cancel}
+        label={'Cancel'} />
+      <Button
+        onClick={upload}
+        label={'Transfer'}
+        disabled={status === TransferStatus.LOADING}
+        gradient />
+    </>
   );
 };
 

@@ -1,5 +1,7 @@
 const URL_KEY_IDENTIFIER = '#k=';
 
+export const W_EMBED_REF = '_embed';
+
 async function isChildWindow(): Promise<boolean> {
   const opener = window.opener;
   if (opener) {
@@ -61,8 +63,8 @@ export function nativeShare(url: string) {
   }
 
   return navigator.share({
-    title: 'e2e transfer',
-    text: 'Fast & secure file 🚀',
+    title: 'fstransfer',
+    text: '🔐 Open encrypted file',
     url,
   });
 }

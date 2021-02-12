@@ -9,6 +9,10 @@
   padding: 12px 22px;
 }
 
+.link {
+  text-decoration: none;
+}
+
 .fst {
   position: relative;
   z-index: 1;
