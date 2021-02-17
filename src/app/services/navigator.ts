@@ -64,7 +64,7 @@ export function nativeShare(url: string) {
 
   return navigator.share({
     title: 'fstransfer',
-    text: '🔐 Open encrypted file',
+    text: '🔐',
     url,
   });
 }
