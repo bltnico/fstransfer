@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 
 import Button from 'app/components/Button';
+import useSyncState from 'app/hooks/useSyncState';
 
 import styles from 'upload/components/TimeSelect.module.css';
 
@@ -16,7 +17,7 @@ const TIMES: TimeChoice[] = [
 ];
 
 const TimeSelect = () => {
-  const [time, setTime] = useState<TimeChoice>(TIMES[0]);
+  const [time, setTime] = useSyncState<TimeChoice>('file/time', TIMES[0]);
   const [open, setOpen] = useState<boolean>(false);
 
   const toggleSelect = useCallback(() => {

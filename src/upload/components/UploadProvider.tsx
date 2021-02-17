@@ -1,6 +1,7 @@
 import { createContext, ReactNode, Dispatch, SetStateAction, useState, useContext, useEffect } from 'react';
 
 import { generateFingerprint } from 'app/services/session';
+import useSyncState from 'app/hooks/useSyncState';
 
 export enum TransferStatus {
   DEFAULT = 'DEFAULT',
@@ -41,7 +42,7 @@ interface Props {
 
 const UploadProvider = ({ children }: Props) => {
   const [status, setStatus] = useState<TransferStatus>(TransferStatus.DEFAULT);
-  const [fingerprint, setFingerprint] = useState<string | null>(null);
+  const [fingerprint, setFingerprint] = useSyncState<string | null>('user/fingerprint', null);
   const [file, setFile] = useState<string | ArrayBuffer | null>(null);
   const [duration, setDuration] = useState<string | null>(null);
   const [shareUrl, setShareUrl] = useState<string | null>(null);
