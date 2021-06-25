@@ -5,6 +5,7 @@ import { extractJwkFromUrl, isInInsecureContext } from 'app/services/navigator';
 import { decryptWithKey, importKey } from 'app/services/crypto';
 import { fileTypeFromBase64, FileType } from 'app/services/file';
 import { receive } from 'app/services/api';
+import Button from 'app/components/Button';
 import Loader from 'app/components/Loader';
 import ImageViewer from 'download/components/ImageViewer';
 import DownloadButton from 'download/components/DownloadButton';
@@ -13,7 +14,6 @@ import NativeShareButton from 'upload/components/NativeShareButton';
 import { ReactComponent as ErrorIcon } from 'cancel.svg';
 
 import styles from 'download/components/Download.module.css';
-import Button from 'app/components/Button';
 
 const Download = () => {
   const history = useHistory();

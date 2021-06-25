@@ -13,6 +13,7 @@ import Upload from 'upload/components/Upload';
 const Versus = lazy(() => import('app/components/Versus'));
 const Embed = lazy(() => import('app/components/Embed'));
 const About = lazy(() => import('app/components/About'));
+const InsecureContextProvider = lazy(() => import('download/components/InsecureContextProvider'));
 const Download = lazy(() => import('download/components/Download'));
 
 const Router = () => {
@@ -40,7 +41,9 @@ const Router = () => {
           </Route>
           <Route path={'/:id'}>
             <Suspense fallback={<Loader />}>
-              <Download />
+              <InsecureContextProvider>
+                <Download />
+              </InsecureContextProvider>
             </Suspense>
           </Route>
           <Route path={'/'}>
